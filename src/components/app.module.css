@@ -50,12 +50,15 @@ body {
 }
 
 .list{
-    height: 26px;
+
+    min-height: 26px;
     display: flex;
+    align-items: center;
+
     border-bottom: 2px solid #42b983;
     font-weight: 700;
     color: #42b983;
-    margin: 5px;
+    padding: 5px;
     &:hover {
             opacity: 0.8;
     }
@@ -75,6 +78,9 @@ body {
     border: 2px solid #42b983;
     &:hover {
         color: #ee1111;
+    &:active{
+        background-color:#ee1111 ;
+        }
     }
 }
 
@@ -93,6 +99,9 @@ body {
     &:hover {
         color: #2b18d7;
     }
+    &:active{
+        background-color:#2b18d7 ;
+    }
 }
 .arrow_down{
     width: 20px;
@@ -106,6 +115,9 @@ body {
     &:hover {
         color: #dfe223;
     }
+    &:active{
+        background-color:#dfe223 ;
+    }
 }
 
 .download{
@@ -116,4 +128,24 @@ body {
     text-decoration: none;
     color:#42b983 ;
     font-size:20px;
+}
+
+.make_pages_size_text{
+    color:#42b983 ;
+    padding-left: 5px;
+}
+.make_pages_size{
+    margin: 20px;
+}
+.sizePsges{
+    color:#060606;
+    font-weight: 200;
+    font-size: 9px;
+}
+.controls{
+    display: flex;
+}
+.fileName {
+    min-width: 460px;
+    text-align: left;
 }
