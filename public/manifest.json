@@ -1,22 +1,17 @@
 {
   "manifest_version": 3,
   "name": "Об'єднання PDF документів",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Об'єднання декількох PDF документів в один",
-  "action":{
-    "default_popup":"index.html",
-    "default_icon" :  { 
-      "16" :  "favicon-16x16.png" , 
-      "48" :  "favicon-48x48.png" , 
-      "128" :  "favicon-128x128.png"  
-    } 
+ "action": {
+    "default_icon": {
+      "16": "icon_16.png",
+      "48": "icon_48.png",
+      "128": "icon_128.png"
+    }
   },
-  "permissions":[
-    
-  ],
-  "icons" :  { 
-    "16" :  "favicon-16x16.png" , 
-    "48" :  "favicon-48x48.png" , 
-    "128" :  "favicon-128x128.png" 
-  } 
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "index.html"
 }
