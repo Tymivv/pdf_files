@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+ul{
+    padding: 0 0;
+    width: 100%;
+}
+a{
+    text-decoration: none;
+}
+body {
+    background: #666;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    padding-top: 5rem;
+    width: 600px;
+    margin: auto auto;
+}
+
+.card {
+    border-radius: 6px;
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 2px 3px 10px rgba(0, 0, 0, .2);
+    text-align: center;
+}
+
+.btn {
+    color: #42b983;
+    border-radius: 99px;
+    border: 1px solid #42b983;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 0.5rem 1.5rem;
+    font-weight: 700;
+    outline: none;
+    background: #fff;
+    transition: all 0.22s;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.btn:active {
+    box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.list{
+
+    min-height: 26px;
+    display: flex;
+    align-items: center;
+
+    border-bottom: 2px solid #42b983;
+    font-weight: 700;
+    color: #42b983;
+    padding: 5px;
+    &:hover {
+            opacity: 0.8;
+    }
+
+}
+
+
+.previewRemove {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    color: #42b983;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 5px;
+    border-radius: 99px;
+    font-weight: 700;
+    border: 2px solid #42b983;
+    &:hover {
+        color: #ee1111;
+    &:active{
+        background-color:#ee1111 ;
+        }
+    }
+}
+
+
+
+
+.arrow_up{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    color: #42b983;
+    font-weight: 700;;
+    cursor: pointer;
+    margin: 0 5px;
+    border: 2px solid #42b983;
+    border-radius: 99px;
+    &:hover {
+        color: #2b18d7;
+    }
+    &:active{
+        background-color:#2b18d7 ;
+    }
+}
+.arrow_down{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    color: #42b983;
+    font-weight: 700;;
+    cursor: pointer;
+    margin: 0 5px;
+    border: 2px solid #42b983;
+    border-radius: 99px;
+    &:hover {
+        color: #dfe223;
+    }
+    &:active{
+        background-color:#dfe223 ;
+    }
+}
+
+.download{
+    color:#42b983 ;
+    margin: 20px;
+}
+.downloadLink{
+    text-decoration: none;
+    color:#42b983 ;
+    font-size:20px;
+}
+
+.make_pages_size_text{
+    color:#42b983 ;
+    padding-left: 5px;
+}
+.make_pages_size{
+    margin: 20px;
+}
+.sizePsges{
+    color:#060606;
+    font-weight: 200;
+    font-size: 9px;
+}
+.controls{
+    display: flex;
+}
+.fileName {
+    min-width: 460px;
+    text-align: left;
+}

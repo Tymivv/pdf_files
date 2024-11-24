@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Об'єднання PDF документів",
-  "version": "0.0.3",
+  "version": "0.4",
   "description": "Об'єднання декількох PDF документів в один",
  "action": {
     "default_icon": {
