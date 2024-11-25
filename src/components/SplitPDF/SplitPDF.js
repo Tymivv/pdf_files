@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import { PDFDocument } from "pdf-lib";
 import "../../App.css";
+import style from "../merge/merge.module.css";
+
 import * as pdfjsLib from "pdfjs-dist/build/pdf";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.entry";
 
@@ -116,10 +118,9 @@ const SplitPDF = () => {
       <button className={"btn"} onClick={openFileInput}>
         Виберіть PDF файли
       </button>
-      {/* <input type="file" accept=".pdf" onChange={handleFileChange} /> */}
       <div style={{ margin: "20px 0" }}>
         <label htmlFor="jpegQuality">
-          Якість: {Math.round(jpegQuality * 100)}%
+          Зменшити розмір: {Math.round(jpegQuality * 100)}%
         </label>
         <input
           id="jpegQuality"
@@ -139,7 +140,7 @@ const SplitPDF = () => {
             checked={convertToGrayscale}
             onChange={(e) => setConvertToGrayscale(e.target.checked)}
           />
-          Зробити монохромним
+          <span className={style.make_pages_size_text}>Зробити монохромним</span>
         </label>
       </div>
       <button
@@ -163,7 +164,7 @@ const SplitPDF = () => {
             borderRadius: "5px",
           }}
         >
-          Завантажити оброблений PDF
+          Завантажити PDF
         </a>
       )}
     </>

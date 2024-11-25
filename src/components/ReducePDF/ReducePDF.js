@@ -51,7 +51,7 @@ const ReducePDF = () => {
     const pdfDoc = await PDFDocument.load(arrayBuffer);
     const newPdfDoc = await PDFDocument.create();
 
-    // Копіюємо вибрані сторінки до нового PDF
+    // Копіює вибрані сторінки до нового PDF
     for (const pageNumber of pagesToInclude) {
       const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [pageNumber - 1]);
       newPdfDoc.addPage(copiedPage);
@@ -97,7 +97,7 @@ const ReducePDF = () => {
             type="text"
             value={pageRange}
             onChange={(e) => setPageRange(e.target.value)}
-            style={{ marginLeft: "10px", padding: "5px", width: "200px" }}
+            style={{ marginLeft: "10px", padding: "5px", width: "200px",  borderRadius:"6px" }}
           />
         </label>
       </div>
