@@ -1,6 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
 import Files from './files/Files';
+import Button  from '../common/Button/Button';
+import FileUploader  from '../common/FileUploader/FileUploader';
+import DownloadLink from "../common/DownloadLink/DownloadLink";
+
 import style from './merge.module.css';
 
 const Merge = () => {
@@ -8,7 +12,6 @@ const Merge = () => {
   const [mergedPDF, setMergedPDF] = useState(null);
   const [error, setError] = useState(null);
   const [makePagesSameSize, setMakePagesSameSize] = useState(false);
-  const fileInputRef = useRef(null);
 
   const handleFileChange = async (event) => {
     if (event.target.files.length < 2) {
@@ -40,10 +43,6 @@ const Merge = () => {
     }
 
     setFileInfos((prevFileInfos) => [...prevFileInfos, ...newFileInfos]);
-  };
-
-  const openFileInput = () => {
-    fileInputRef.current.click();
   };
 
   const removeFile = (indexToRemove) => {
@@ -120,27 +119,13 @@ const Merge = () => {
     }
   };
 
-  let d = new Date().getTime();
-
   return (
     <>
         <h1>Об'єднання PDF файлів</h1>
-        <input
-          type="file"
-          onChange={handleFileChange}
-          multiple
-          accept=".pdf"
-          style={{ display: 'none' }}
-          ref={fileInputRef}
-        />
-        <button className={style.btn} onClick={openFileInput}>
-          Виберіть PDF файли
-        </button>
+        <FileUploader onChange={handleFileChange} accept=".pdf" multiple />
         {fileInfos.length > 1 && (
           <>
-            <button className={style.btn} onClick={mergePDFs}>
-              Об'єднати PDF файли
-            </button>
+          <Button onClick={mergePDFs}> Об'єднати PDF файли</Button>
             <div className={style.make_pages_size}>
                 <input
                 type="checkbox"
@@ -154,16 +139,10 @@ const Merge = () => {
           </>
         )}
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        {mergedPDF && (
-          <div className={style.download}>
-            <a
-              className={style.downloadLink}
-              href={URL.createObjectURL(mergedPDF)}
-              download={`${d}`}
-            >
-              Завантажити PDF
-            </a>
-          </div>
+        {mergedPDF && (          
+            <DownloadLink href={URL.createObjectURL(mergedPDF)} download="merged.pdf">
+              Завантажити новий PDF
+            </DownloadLink>
         )}
         <Files
           fileInfos={fileInfos}

@@ -13,7 +13,7 @@ body {
 
 .container {
     padding-top: 5rem;
-    width: 600px;
+    width: 980px;
     margin: auto auto;
 }
 
@@ -25,7 +25,7 @@ body {
     text-align: center;
 }
 
-.btn {
+/* .btn {
     color: #4CAF50;
     border-radius: 99px;
     border: 1px solid #4CAF50;
@@ -47,7 +47,7 @@ body {
 .btn:hover {
     cursor: pointer;
     opacity: 0.8;
-}
+} */
 
 .list{
 
@@ -152,6 +152,7 @@ body {
     font-size: 9px;
 }
 .controls{
+     margin-left: auto;
     display: flex;
 }
 .fileName {

@@ -1,5 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import * as pdfjsLib from "pdfjs-dist/build/pdf";
+import Button  from '../common/Button/Button';
+import FileUploader  from '../common/FileUploader/FileUploader';
+import DownloadLink from "../common/DownloadLink/DownloadLink";
+
 import "../../App.css";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.entry";
 import { PDFDocument } from "pdf-lib";
@@ -12,11 +16,6 @@ const ReducePDF = () => {
   const [processedPDF, setProcessedPDF] = useState(null);
   const [pageRange, setPageRange] = useState(""); // Сторінки для нового PDF
   const [loading, setLoading] = useState(false);
-  const fileInputRef = useRef(null);
-
-  const openFileInput = () => {
-    fileInputRef.current.click();
-  };
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -46,21 +45,27 @@ const ReducePDF = () => {
 
   const createNewPDF = async (file, pagesToInclude) => {
     setLoading(true);
-
+  
     const arrayBuffer = await file.arrayBuffer();
     const pdfDoc = await PDFDocument.load(arrayBuffer);
+    const totalPages = pdfDoc.getPageCount(); // Отримуємо кількість сторінок у PDF
     const newPdfDoc = await PDFDocument.create();
-
+  
     // Копіює вибрані сторінки до нового PDF
     for (const pageNumber of pagesToInclude) {
-      const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [pageNumber - 1]);
-      newPdfDoc.addPage(copiedPage);
+      if (pageNumber > 0 && pageNumber <= totalPages) {
+        const [copiedPage] = await newPdfDoc.copyPages(pdfDoc, [pageNumber - 1]);
+        newPdfDoc.addPage(copiedPage);
+      } else {
+        alert(`Сторінка ${pageNumber} не існує у цьому PDF файлі.`);
+      }
     }
-
+  
     const pdfBytes = await newPdfDoc.save();
     setLoading(false);
     return new Blob([pdfBytes], { type: "application/pdf" });
   };
+  
 
   const handleCreatePDF = async () => {
     if (!file || !pageRange) return;
@@ -68,7 +73,7 @@ const ReducePDF = () => {
     const pages = parsePageRange(pageRange);
 
     if (pages.some((p) => isNaN(p) || p <= 0)) {
-      alert("Некоректний формат сторінок!");
+      alert("Не коректний формат сторінок!");
       return;
     }
 
@@ -79,17 +84,7 @@ const ReducePDF = () => {
   return (
     <>
       <h1>Роз'єднання PDF</h1>
-      <input
-        type="file"
-        onChange={handleFileChange}
-        multiple
-        accept=".pdf"
-        style={{ display: 'none' }}
-        ref={fileInputRef}
-      />
-      <button className={"btn"} onClick={openFileInput}>
-        Виберіть PDF файли
-      </button>
+      <FileUploader onChange={handleFileChange} accept=".pdf" />
       <div style={{ margin: "20px 0" }}>
         <label>
           Введіть сторінки (наприклад, 1,3-6):
@@ -101,29 +96,11 @@ const ReducePDF = () => {
           />
         </label>
       </div>
-      <button
-        className={"btn"}
-        onClick={handleCreatePDF}
-        disabled={loading}
-      >
-        {loading ? "Обробка..." : "Створити новий PDF"}
-      </button>
+      <Button onClick={handleCreatePDF} disabled={loading}>{loading ? "Обробка..." : "Створити новий PDF"}</Button>
       {processedPDF && (
-        <a
-          href={URL.createObjectURL(processedPDF)}
-          download="selected-pages.pdf"
-          style={{
-            display: "block",
-            marginTop: "20px",
-            color: "white",
-            backgroundColor: "#4CAF50",
-            padding: "10px 20px",
-            textDecoration: "none",
-            borderRadius: "5px",
-          }}
-        >
+        <DownloadLink href={URL.createObjectURL(processedPDF)} download="selected-pages.pdf">
           Завантажити новий PDF
-        </a>
+        </DownloadLink>
       )}
     </>
   );

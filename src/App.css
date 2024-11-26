@@ -20,7 +20,7 @@
 }
 
 body {
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.5;
   background-color: var(--bg-secondary);
   color: var(--txt-color);
@@ -62,7 +62,7 @@ body {
 }
 
 
-.btn {
+/* .btn {
   color: #4CAF50;
   border-radius: 99px;
   border: 1px solid #4CAF50;
@@ -84,4 +84,4 @@ body {
 .btn:hover {
   cursor: pointer;
   opacity: 0.8;
-}
+} */

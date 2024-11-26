@@ -1,0 +1,10 @@
+.link {
+    display: block;
+    margin-top: 20px;
+    color: white;
+    background-color: #4caf50;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}

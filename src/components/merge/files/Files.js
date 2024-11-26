@@ -1,6 +1,6 @@
 import React from 'react';
+import FileControls  from '../../common/FileControls/FileControls';
 import style from '../merge.module.css';
-
 
 const Files = ({ fileInfos, removeFile, moveFile }) => {
 return (
@@ -13,31 +13,12 @@ return (
                 Розмір сторінок: {info.maxWidth.toFixed(0)} x {info.maxHeight.toFixed(0)}
             </div>
         </div>
-        <div className={style.controls}>
-            <div
-                className={style.previewRemove}
-                onClick={() => removeFile(index)} // Викликаємо функцію видалення файлу
-                >
-                    &#10006; 
-            </div>
-            {index > 0 && (
-            <div
-                className={style.arrow_up}
-                onClick={() => moveFile(index, index - 1)} // Переміщуємо файл вгору
-                >
-                &#11014; 
-            </div>
-            )}
-            {index < fileInfos.length - 1 && (
-            <div
-                className={style.arrow_down}
-                onClick={() => moveFile(index, index + 1)} // Переміщуємо файл вниз
-                >
-                &#11015; 
-            </div>
-            )}
-        </div>
-            
+        <FileControls
+            index={index}
+            moveFile={moveFile}
+            deleteFile={removeFile}
+            totalFiles={fileInfos.length}
+            />
         </li>
     ))}
     </ul>

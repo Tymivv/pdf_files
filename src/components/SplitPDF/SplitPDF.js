@@ -1,5 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { PDFDocument } from "pdf-lib";
+import Button  from '../common/Button/Button';
+import FileUploader  from '../common/FileUploader/FileUploader';
+import DownloadLink from "../common/DownloadLink/DownloadLink";
 import "../../App.css";
 import style from "../merge/merge.module.css";
 
@@ -16,11 +19,7 @@ const SplitPDF = () => {
   const [jpegQuality, setJpegQuality] = useState(0.7); // Початкова якість JPEG
   const [convertToGrayscale, setConvertToGrayscale] = useState(false); // Контроль чорно-білого перетворення
   const [loading, setLoading] = useState(false);
-  const fileInputRef = useRef(null);
 
-  const openFileInput = () => {
-    fileInputRef.current.click();
-  };
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -107,17 +106,7 @@ const SplitPDF = () => {
   return (
     <>
       <h1>Зменшення розміру PDF</h1>
-      <input
-        type="file"
-        onChange={handleFileChange}
-        multiple
-        accept=".pdf"
-        style={{ display: 'none' }}
-        ref={fileInputRef}
-      />
-      <button className={"btn"} onClick={openFileInput}>
-        Виберіть PDF файли
-      </button>
+      <FileUploader onChange={handleFileChange} accept=".pdf" />
       <div style={{ margin: "20px 0" }}>
         <label htmlFor="jpegQuality">
           Зменшити розмір: {Math.round(jpegQuality * 100)}%
@@ -143,29 +132,11 @@ const SplitPDF = () => {
           <span className={style.make_pages_size_text}>Зробити монохромним</span>
         </label>
       </div>
-      <button
-        className={"btn"}
-        onClick={handleProcessPDF}
-        disabled={loading}
-      >
-        {loading ? "Обробка..." : "Обробити PDF"}
-      </button>
+      <Button onClick={handleProcessPDF} disabled={loading}>{loading ? "Обробка..." : "Обробити PDF"}</Button>
       {processedPDF && (
-        <a
-          href={URL.createObjectURL(processedPDF)}
-          download="processed.pdf"
-          style={{
-            display: "block",
-            marginTop: "20px",
-            color: "white",
-            backgroundColor: "#4CAF50",
-            padding: "10px 20px",
-            textDecoration: "none",
-            borderRadius: "5px",
-          }}
-        >
-          Завантажити PDF
-        </a>
+        <DownloadLink href={URL.createObjectURL(processedPDF)} download="processed.pdf">
+            Завантажити новий PDF
+        </DownloadLink>
       )}
     </>
   );

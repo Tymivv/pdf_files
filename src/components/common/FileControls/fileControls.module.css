@@ -14,6 +14,9 @@
 }
 
 .previewRemove, .arrow_up, .arrow_down {
+    justify-content: center;
+    align-items: center;
+    display: flex;
     width: 20px;
     height: 20px;
     color: #42b983;
