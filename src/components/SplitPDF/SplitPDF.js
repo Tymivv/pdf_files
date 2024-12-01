@@ -3,9 +3,6 @@ import { PDFDocument } from "pdf-lib";
 import Button  from '../common/Button/Button';
 import FileUploader  from '../common/FileUploader/FileUploader';
 import DownloadLink from "../common/DownloadLink/DownloadLink";
-import "../../App.css";
-import style from "../merge/merge.module.css";
-
 import * as pdfjsLib from "pdfjs-dist/build/pdf";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.entry";
 
@@ -129,7 +126,7 @@ const SplitPDF = () => {
             checked={convertToGrayscale}
             onChange={(e) => setConvertToGrayscale(e.target.checked)}
           />
-          <span className={style.make_pages_size_text}>Зробити монохромним</span>
+          <span className="make_pages_size_text">Зробити монохромним</span>
         </label>
       </div>
       <Button onClick={handleProcessPDF} disabled={loading}>{loading ? "Обробка..." : "Обробити PDF"}</Button>

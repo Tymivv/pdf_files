@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FileUploader  from '../common/FileUploader/FileUploader';
+import "../../App.css";
 import * as pdfjsLib from "pdfjs-dist/webpack";
 import pdfWorker from "pdfjs-dist/build/pdf.worker.entry";
 
@@ -82,6 +83,7 @@ const PDFToImages = () => {
                   }}
                 />
                 <a
+                  className="imageLink"
                   href={img.data}
                   download={`page-${img.page}.jpeg`}
                   style={{

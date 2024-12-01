@@ -67,7 +67,7 @@ const ImageToPDF = () => {
         <FileUploader onChange={handleFileChange} accept="image/jpeg, image/jpg, image/png" multiple />
         {selectedFiles.length > 0 && (
         <div style={{ marginTop: "20px" }}>
-        <h3>Вибрані зображення</h3>
+        <h2 style={{color: "#4CAF50"}}>Вибрані зображення</h2>
         <ul style={{ listStyle: "none", padding: 0 }}>
             {selectedFiles.map((file, index) => (
             <li
@@ -76,6 +76,7 @@ const ImageToPDF = () => {
                 display: "flex",
                 alignItems: "center",
                 marginBottom: "10px",
+                color: "#4CAF50",
                 }}
             >
                 <img
@@ -88,7 +89,6 @@ const ImageToPDF = () => {
                     border: "2px solid #ccc",
                     borderRadius: "5px",
                     boxShadow:"0 8px 24px #959da533",
-
                 }}
                 />
                 <span>{file.name}</span>

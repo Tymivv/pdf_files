@@ -5,7 +5,7 @@ import Button  from '../common/Button/Button';
 import FileUploader  from '../common/FileUploader/FileUploader';
 import DownloadLink from "../common/DownloadLink/DownloadLink";
 
-import style from './merge.module.css';
+import style from '../../App.css';
 
 const Merge = () => {
   const [fileInfos, setFileInfos] = useState([]);
@@ -132,7 +132,7 @@ const Merge = () => {
                 checked={makePagesSameSize}
                 onChange={(e) => setMakePagesSameSize(e.target.checked)}
               />
-              <span className={style.make_pages_size_text}>
+              <span className="make_pages_size_text">
                 Зробити розмір сторінок однаковим
               </span>
             </div>

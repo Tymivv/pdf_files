@@ -6,12 +6,11 @@ import SplitPDF from "./components/SplitPDF/SplitPDF";
 import ImageToPDF from "./components/imageToPDF/ImageToPDF";
 import PDFToImage from "./components/PDFToImage/PDFToImage";
 import "./App.css"; // Стилі для навігації
-import style from "./components/merge/merge.module.css";
 
 const App = () => {
   return (
-    <div className={style.container}>
-      <div className={style.card}>
+    <div className="container">
+      <div className="card">
         <div>
           {/* Навігація */}
           <nav className="navbar">

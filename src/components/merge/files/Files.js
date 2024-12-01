@@ -1,6 +1,6 @@
 import React from 'react';
 import FileControls  from '../../common/FileControls/FileControls';
-import style from '../merge.module.css';
+import style from './files.module.css';
 
 const Files = ({ fileInfos, removeFile, moveFile }) => {
 return (

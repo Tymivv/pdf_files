@@ -1,0 +1,23 @@
+.fileName {
+    min-width: 460px;
+    text-align: left;
+}
+.list{
+    min-height: 26px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid --primary;
+    font-weight: 700;
+    color: --primary;
+    padding: 5px;
+    color: #4CAF50;
+    &:hover {
+            opacity: 0.8;
+    }
+
+}
+.sizePsges{
+    color:#060606;
+    font-weight: 200;
+    font-size: 9px;
+}
