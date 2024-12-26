@@ -195,3 +195,20 @@ a{
     box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.5);
   }
 
+  canvas {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid black;
+    max-width: 100%;
+    height: auto;
+  }
+  select{
+    border-radius: 99px;
+    border: 1px solid #4CAF50
+  }
+
+  input{
+    border-radius: 5px;
+    border: 1px solid #4CAF50;
+    text-align: center;
+  }

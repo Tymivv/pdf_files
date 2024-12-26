@@ -5,6 +5,7 @@ import ReducePDF from "./components/ReducePDF/ReducePDF";
 import SplitPDF from "./components/SplitPDF/SplitPDF";
 import ImageToPDF from "./components/imageToPDF/ImageToPDF";
 import PDFToImage from "./components/PDFToImage/PDFToImage";
+import DrawOnPDF from "./components/DrawOnPDF/DrawOnPDF";
 import "./App.css"; // Стилі для навігації
 
 const App = () => {
@@ -15,19 +16,22 @@ const App = () => {
           {/* Навігація */}
           <nav className="navbar">
             <NavLink to="/merge" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-              Об'єднання PDF
+              Об'єднати
             </NavLink>
-            <NavLink to="/reducePDF" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-              Роз'єднання PDF
+            <NavLink to="/reducepdf" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Роз'єднати
             </NavLink>
-            <NavLink to="/splitPDF" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-              Редагування PDF
+            <NavLink to="/splitpdf" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Редагувати
             </NavLink>
-            <NavLink to="/imageToPDF" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-              Створення PDF
+            <NavLink to="/imagetopdf" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Створити
             </NavLink>
-            <NavLink to="/pdfToImages" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+            <NavLink to="/pdftoimages" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
               Конвертувати в JPEG
+            </NavLink>
+            <NavLink to="/drawonpdf" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Малювати
             </NavLink>
           </nav>
 
@@ -35,10 +39,11 @@ const App = () => {
           <div className="content">
             <Routes>
               <Route path="/merge" element={<Merge />} />
-              <Route path="/reducePDF" element={<ReducePDF />} />
-              <Route path="/splitPDF" element={<SplitPDF />} />
-              <Route path="/imageToPDF" element={<ImageToPDF />} />
-              <Route path="/pdfToImages" element={<PDFToImage />} />
+              <Route path="/reducepdf" element={<ReducePDF />} />
+              <Route path="/splitpdf" element={<SplitPDF />} />
+              <Route path="/imagetopdf" element={<ImageToPDF />} />
+              <Route path="/pdftoimages" element={<PDFToImage />} />
+              <Route path="/drawonpdf" element={<DrawOnPDF />} />
               <Route path="/" element={<Merge />} />
             </Routes>
           </div>
