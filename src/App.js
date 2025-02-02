@@ -6,6 +6,7 @@ import SplitPDF from "./components/SplitPDF/SplitPDF";
 import ImageToPDF from "./components/imageToPDF/ImageToPDF";
 import PDFToImage from "./components/PDFToImage/PDFToImage";
 import DrawOnPDF from "./components/DrawOnPDF/DrawOnPDF";
+import EncodeDecodePDFBase64 from "./components/EncodeDecodePDFBase64/EncodeDecodePDFBase64"; 
 import "./App.css"; // Стилі для навігації
 
 const App = () => {
@@ -33,6 +34,9 @@ const App = () => {
             <NavLink to="/drawonpdf" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
               Малювати
             </NavLink>
+            <NavLink to="/encodeDecodePDFBase64" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Base64
+            </NavLink>
           </nav>
 
           {/* Відображення компонентів */}
@@ -44,6 +48,7 @@ const App = () => {
               <Route path="/imagetopdf" element={<ImageToPDF />} />
               <Route path="/pdftoimages" element={<PDFToImage />} />
               <Route path="/drawonpdf" element={<DrawOnPDF />} />
+              <Route path="/encodeDecodePDFBase64" element={<EncodeDecodePDFBase64 />} />
               <Route path="/" element={<Merge />} />
             </Routes>
           </div>
