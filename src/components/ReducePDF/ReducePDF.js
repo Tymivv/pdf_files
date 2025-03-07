@@ -85,6 +85,8 @@ const ReducePDF = () => {
     <>
       <h1>Роз'єднання PDF</h1>
       <FileUploader onChange={handleFileChange} accept=".pdf" />
+      {file && (
+        <>
       <div style={{ margin: "20px 0" }}>
         <label>
           Введіть сторінки (наприклад, 1,3-6):
@@ -97,6 +99,8 @@ const ReducePDF = () => {
         </label>
       </div>
       <Button onClick={handleCreatePDF} disabled={loading}>{loading ? "Обробка..." : "Створити новий PDF"}</Button>
+      </>
+    )}
       {processedPDF && (
         <DownloadLink href={URL.createObjectURL(processedPDF)} download="selected-pages.pdf">
           Завантажити новий PDF

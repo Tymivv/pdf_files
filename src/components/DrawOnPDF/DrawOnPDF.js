@@ -2,10 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import * as pdfjsLib from "pdfjs-dist";
 import * as pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
 import { PDFDocument } from "pdf-lib";
-import Button  from '../common/Button/Button';
-import FileUploader  from '../common/FileUploader/FileUploader';
-import style from '../../App.css';
-
+import Button from "../common/Button/Button";
+import FileUploader from "../common/FileUploader/FileUploader";
+import style from "../../App.css";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
@@ -22,6 +21,12 @@ function PdfAnnotator() {
   const [tool, setTool] = useState("pen"); // "pen", "eraser", "line", "rectangle", "circle"
   const [color, setColor] = useState("#ff0000");
   const [lineWidth, setLineWidth] = useState(3);
+
+  // Прозорість (alpha)
+  const [alpha, setAlpha] = useState(1); // 1 = непрозоре, 0 = повністю прозоре
+
+  // Чи заливати прямокутник/коло
+  const [fillShape, setFillShape] = useState(false);
 
   // У shapesByPage зберігаємо фігури окремо для кожної сторінки:
   // {
@@ -64,7 +69,6 @@ function PdfAnnotator() {
    */
   useEffect(() => {
     if (!pdfData) return;
-
     const loadingTask = pdfjsLib.getDocument({ data: pdfData });
     loadingTask.promise.then((loadedPdf) => {
       setPdfDoc(loadedPdf);
@@ -173,6 +177,7 @@ function PdfAnnotator() {
       newShape = {
         tool,
         color: tool === "eraser" ? "#ffffff" : color,
+        alpha: tool === "eraser" ? 1 : alpha, // Для гумки можна залишити alpha=1, або враховувати поточне alpha
         lineWidth,
         points: [...points],
       };
@@ -181,12 +186,17 @@ function PdfAnnotator() {
       newShape = {
         tool,
         color,
+        alpha,
         lineWidth,
         x1: startX,
         y1: startY,
         x2: x,
         y2: y,
       };
+      // Якщо це rectangle/circle, додаємо info про заливку
+      if (tool === "rectangle" || tool === "circle") {
+        newShape.fillShape = fillShape; 
+      }
     }
 
     // Додаємо фігуру в shapesByPage для поточної сторінки
@@ -230,11 +240,15 @@ function PdfAnnotator() {
     const ctx = overlayCanvas.getContext("2d");
     ctx.save();
 
+    // Встановимо прозорість
+    ctx.globalAlpha = alpha;
+
     if (tool === "pen" || tool === "eraser") {
       // малюємо весь поточний штрих
       drawShape(ctx, {
         tool,
         color: tool === "eraser" ? "#ffffff" : color,
+        alpha: tool === "eraser" ? 1 : alpha,
         lineWidth,
         points,
       });
@@ -252,6 +266,12 @@ function PdfAnnotator() {
       } else if (tool === "rectangle") {
         const w = x - startX;
         const h = y - startY;
+        // Якщо потрібно залити
+        if (fillShape) {
+          ctx.fillStyle = color;
+          ctx.fillRect(startX, startY, w, h);
+        }
+        // Обведення
         ctx.strokeRect(startX, startY, w, h);
       } else if (tool === "circle") {
         const radius = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2)) / 2;
@@ -259,6 +279,11 @@ function PdfAnnotator() {
         const cy = (startY + y) / 2;
         ctx.beginPath();
         ctx.arc(cx, cy, radius, 0, 2 * Math.PI);
+        // Якщо потрібно залити
+        if (fillShape) {
+          ctx.fillStyle = color;
+          ctx.fill();
+        }
         ctx.stroke();
       }
     }
@@ -273,6 +298,8 @@ function PdfAnnotator() {
     ctx.lineWidth = shape.lineWidth;
     ctx.lineCap = "round";
     ctx.strokeStyle = shape.color;
+    // Налаштуємо прозорість
+    ctx.globalAlpha = shape.alpha;
 
     if (shape.tool === "pen" || shape.tool === "eraser") {
       const pts = shape.points || [];
@@ -294,6 +321,10 @@ function PdfAnnotator() {
     } else if (shape.tool === "rectangle") {
       const w = shape.x2 - shape.x1;
       const h = shape.y2 - shape.y1;
+      if (shape.fillShape) {
+        ctx.fillStyle = shape.color;
+        ctx.fillRect(shape.x1, shape.y1, w, h);
+      }
       ctx.strokeRect(shape.x1, shape.y1, w, h);
     } else if (shape.tool === "circle") {
       const r = Math.sqrt(Math.pow(shape.x2 - shape.x1, 2) + Math.pow(shape.y2 - shape.y1, 2)) / 2;
@@ -301,6 +332,10 @@ function PdfAnnotator() {
       const cy = (shape.y1 + shape.y2) / 2;
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+      if (shape.fillShape) {
+        ctx.fillStyle = shape.color;
+        ctx.fill();
+      }
       ctx.stroke();
     }
 
@@ -341,8 +376,6 @@ function PdfAnnotator() {
 
   /**
    * Зберегти PDF (лише для поточної сторінки)
-   * Якщо потрібні всі сторінки — треба складніший цикл, 
-   * де рендеримо і накладаємо кожну сторінку у “offscreen” canvas.
    */
   const handleSavePdf = async () => {
     if (!pdfDoc || !pdfFile) return;
@@ -390,8 +423,9 @@ function PdfAnnotator() {
     <div style={{ maxWidth: 800, margin: "0 auto" }}>
       <h1>Малювання на обраній сторінці</h1>
       <FileUploader onChange={handleFileChange} accept=".pdf" />
+
       {pdfDoc && (
-        <div style={{ marginTop: 16, color:'#4CAF50' }}>
+        <div style={{ marginTop: 16, color: "#4CAF50" }}>
           {/* Вибір сторінки */}
           <div style={{ marginBottom: 8 }}>
             <span>Всього сторінок: {numPages}</span>
@@ -421,6 +455,7 @@ function PdfAnnotator() {
               </select>
             </label>
 
+            {/* Колір (для всіх, крім гумки – в гумки він умовний) */}
             {tool !== "eraser" && (
               <label style={{ marginRight: 10 }}>
                 Колір:{" "}
@@ -432,6 +467,21 @@ function PdfAnnotator() {
               </label>
             )}
 
+            {/* Прозорість */}
+            <label style={{ marginRight: 10 }}>
+              Прозорість ({alpha.toFixed(1)}):
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.1"
+                value={alpha}
+                onChange={(e) => setAlpha(Number(e.target.value))}
+                style={{ verticalAlign: "middle", marginLeft: 5 }}
+              />
+            </label>
+
+            {/* Товщина */}
             <label style={{ marginRight: 10 }}>
               Товщина:{" "}
               <input
@@ -443,9 +493,22 @@ function PdfAnnotator() {
                 onChange={(e) => setLineWidth(Number(e.target.value))}
               />
             </label>
-            <Button onClick={handleUndo}> Відмінити</Button>
-            <Button onClick={handleClear}> Очистити</Button>
-            <Button onClick={handleSavePdf}> Зберегти PDF (з змінами в поточній сторінці)</Button>
+
+            {/* Чи заливати прямокутник / коло */}
+            {(tool === "rectangle" || tool === "circle") && (
+              <div style={{ margin: 10 }}>
+                <input
+                  type="checkbox"
+                  checked={fillShape}
+                  onChange={(e) => setFillShape(e.target.checked)}
+                />
+                {" "}Заповнювати фігуру
+              </div>
+            )}
+
+            <Button onClick={handleUndo}>Відмінити</Button>
+            <Button onClick={handleClear}>Очистити</Button>
+            <Button onClick={handleSavePdf}>Зберегти PDF</Button>
           </div>
 
           {/* Блок canvasів */}
@@ -463,7 +526,8 @@ function PdfAnnotator() {
                 position: "absolute",
                 top: 0,
                 left: 0,
-                cursor: tool === "pen" || tool === "eraser" ? "crosshair" : "default",
+                cursor:
+                  tool === "pen" || tool === "eraser" ? "crosshair" : "default",
               }}
               onMouseDown={handleMouseDown}
               onMouseMove={handleMouseMove}

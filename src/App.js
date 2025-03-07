@@ -6,6 +6,8 @@ import SplitPDF from "./components/SplitPDF/SplitPDF";
 import ImageToPDF from "./components/imageToPDF/ImageToPDF";
 import PDFToImage from "./components/PDFToImage/PDFToImage";
 import DrawOnPDF from "./components/DrawOnPDF/DrawOnPDF";
+import PdfPageEditor from "./components/PdfPageEditor/PdfPageEditor";
+
 import EncodeDecodePDFBase64 from "./components/EncodeDecodePDFBase64/EncodeDecodePDFBase64"; 
 import "./App.css"; // Стилі для навігації
 
@@ -21,6 +23,9 @@ const App = () => {
             </NavLink>
             <NavLink to="/reducepdf" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
               Роз'єднати
+            </NavLink>
+            <NavLink to="/page" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              Сторінки
             </NavLink>
             <NavLink to="/splitpdf" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
               Редагувати
@@ -49,6 +54,7 @@ const App = () => {
               <Route path="/pdftoimages" element={<PDFToImage />} />
               <Route path="/drawonpdf" element={<DrawOnPDF />} />
               <Route path="/encodeDecodePDFBase64" element={<EncodeDecodePDFBase64 />} />
+              <Route path="/page" element={<PdfPageEditor />} />
               <Route path="/" element={<Merge />} />
             </Routes>
           </div>
