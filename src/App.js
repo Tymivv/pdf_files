@@ -7,6 +7,7 @@ import ImageToPDF from "./components/imageToPDF/ImageToPDF";
 import PDFToImage from "./components/PDFToImage/PDFToImage";
 import DrawOnPDF from "./components/DrawOnPDF/DrawOnPDF";
 import PdfPageEditor from "./components/PdfPageEditor/PdfPageEditor";
+import TiffToPdf from "./components/TiffToPdf/TiffToPdf";
 
 import EncodeDecodePDFBase64 from "./components/EncodeDecodePDFBase64/EncodeDecodePDFBase64"; 
 import "./App.css"; // Стилі для навігації
@@ -34,10 +35,13 @@ const App = () => {
               Створити
             </NavLink>
             <NavLink to="/pdftoimages" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
-              Конвертувати в JPEG
+              JPEG
             </NavLink>
             <NavLink to="/drawonpdf" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
               Малювати
+            </NavLink>
+            <NavLink to="/tiff" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+              TIFF
             </NavLink>
             <NavLink to="/encodeDecodePDFBase64" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
               Base64
@@ -55,6 +59,7 @@ const App = () => {
               <Route path="/drawonpdf" element={<DrawOnPDF />} />
               <Route path="/encodeDecodePDFBase64" element={<EncodeDecodePDFBase64 />} />
               <Route path="/page" element={<PdfPageEditor />} />
+              <Route path="/tiff" element={<TiffToPdf />} />
               <Route path="/" element={<Merge />} />
             </Routes>
           </div>
